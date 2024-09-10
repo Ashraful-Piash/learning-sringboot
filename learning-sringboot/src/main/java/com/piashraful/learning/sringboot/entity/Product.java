@@ -24,5 +24,6 @@ public class Product {
     private Integer quantityInStock;
     private String category;
     private String imageUrl;
+    private Boolean isActive;
 
 }

@@ -4,9 +4,11 @@ package com.piashraful.learning.sringboot.controller;
 import com.piashraful.learning.sringboot.entity.Product;
 import com.piashraful.learning.sringboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +28,16 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public Product fetchProductById(@PathVariable ("id") Long productId) {
-        return productService.fetchProductById(productId);
+
+    public ResponseEntity<Product> fetchProductById(@PathVariable("id") Long productId) {
+        Optional<Product> product = productService.fetchProductById(productId);
+        return ResponseEntity.of(product);
+    }
+
+    @DeleteMapping("/product/{id}")
+    public String deleteProductById(@PathVariable("id") Long productId) {
+         productService.deleteProductById(productId);
+         return "Product with id " + productId + " deleted successfully";
     }
 
 
