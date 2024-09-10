@@ -27,16 +27,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> fetchProductById(Long productId) {
-        return productRepository.findByProductIdAndIsActiveTrue(productId);
+        try {
+            return Optional.ofNullable(productRepository.findByProductIdAndIsActiveTrue(productId)
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId)));
+        } catch (EntityNotFoundException e) {
+            return Optional.empty();
+        }
     }
+
 
     @Override
     public void deleteProductById(Long productId) {
         Optional<Product> productOptional = productRepository.findById(productId);
         if (productOptional.isPresent()) {
-            Product product = productOptional.get();  // Retrieve the Product
-            product.setIsActive(false);               // Set isActive to false
-            productRepository.save(product);          // Save the updated Product
+            Product product = productOptional.get();
+            product.setIsActive(false);
+            productRepository.save(product);
         } else {
             throw new EntityNotFoundException("Product not found with id: " + productId);
         }

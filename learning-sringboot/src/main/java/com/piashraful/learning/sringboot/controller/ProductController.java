@@ -4,6 +4,7 @@ package com.piashraful.learning.sringboot.controller;
 import com.piashraful.learning.sringboot.entity.Product;
 import com.piashraful.learning.sringboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +29,11 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-
     public ResponseEntity<Product> fetchProductById(@PathVariable("id") Long productId) {
         Optional<Product> product = productService.fetchProductById(productId);
-        return ResponseEntity.of(product);
+        return product.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null));
     }
 
     @DeleteMapping("/product/{id}")
