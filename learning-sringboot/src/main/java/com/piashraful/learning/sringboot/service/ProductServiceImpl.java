@@ -47,4 +47,9 @@ public class ProductServiceImpl implements ProductService {
             throw new EntityNotFoundException("Product not found with id: " + productId);
         }
     }
+
+    @Override
+    public String getProductByName(String productName) {
+        return productRepository.findByProductName(productName);
+    }
 }

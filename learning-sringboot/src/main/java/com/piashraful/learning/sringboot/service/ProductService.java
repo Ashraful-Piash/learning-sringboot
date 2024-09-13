@@ -13,4 +13,6 @@ public interface ProductService {
    public Optional<Product> fetchProductById(Long productId);
 
    public void deleteProductById(Long productId);
+
+   public String  getProductByName(String productName);
 }
