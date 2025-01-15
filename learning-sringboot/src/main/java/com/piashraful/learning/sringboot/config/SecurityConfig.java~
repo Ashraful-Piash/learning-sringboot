@@ -1,5 +1,6 @@
 package com.piashraful.learning.sringboot.config;
 
+
 import com.piashraful.learning.sringboot.service.UserInfoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

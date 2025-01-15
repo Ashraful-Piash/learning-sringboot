@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,12 +35,14 @@ public class ProductController {
         return productService.saveProduct(product);
     }
 
-    @GetMapping("/products")
+    @GetMapping("/products/all")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/product/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     public ResponseEntity<Product> fetchProductById(@PathVariable("id") Long productId) {
         Optional<Product> product = productService.fetchProductById(productId);
         return product.map(ResponseEntity::ok)
@@ -68,6 +71,11 @@ public class ProductController {
             throw  new UsernameNotFoundException("Invalid username or password");
         }
 
+    }
+
+    @GetMapping("/test")
+    public String test (){
+        return "This is a test for security";
     }
 
 
