@@ -1,6 +1,5 @@
 package com.piashraful.learning.sringboot.config;
 
-
 import com.piashraful.learning.sringboot.service.UserInfoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,20 +26,20 @@ public class SecurityConfig {
 
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/test", "/users").permitAll()
-                .and()
-                .authorizeHttpRequests().requestMatchers("/products/**", "/product/**")
-                .authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .build();
-
-    }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        return http.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/test", "/users").permitAll()
+//                .and()
+//                .authorizeHttpRequests().requestMatchers("/products/**", "/product/**")
+//                .authenticated()
+//                .and()
+//                .httpBasic()
+//                .and()
+//                .build();
+//
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
